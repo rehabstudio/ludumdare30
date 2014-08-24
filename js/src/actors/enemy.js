@@ -11,7 +11,7 @@ var Enemy = function(scene){
     this.y = scene.game.world.randomY;
     this.angle = scene.game.rnd.angle();
 
-    this.scale.x = this.scale.y = this.baseScale = 0.6;
+    //this.scale.x = this.scale.y = this.baseScale = 0.6;
     this.anchor.setTo(0.5, 0.5);
 
     this.speed = Math.random()*10 + 15;

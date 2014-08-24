@@ -5,7 +5,7 @@ var assets = {
         ['pixel', 'assets/gfx/pix.png', 1, 1],
     ],
     spritesheets: [
-        ['player', 'assets/gfx/player-test.png', 56, 62],
+        ['player', 'assets/gfx/player-test.png', 60, 66],
         ['enemy', 'assets/gfx/mob-test.png', 83, 104],
         ['bullet', 'assets/gfx/bullet-test.png', 5, 7],
         ['bgtest', 'assets/gfx/bg_tile.jpg', 256, 256]

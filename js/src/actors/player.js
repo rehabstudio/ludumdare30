@@ -8,7 +8,7 @@ var Player = function(scene){
     //
     this.body.collideWorldBounds = true;
 
-    this.scale.x = this.scale.y = this.baseScale = 0.6;
+    //this.scale.x = this.scale.y = this.baseScale = 0.6;
     this.anchor.setTo(0.5, 0.5);
 
     this.maxSpeed = 5;
