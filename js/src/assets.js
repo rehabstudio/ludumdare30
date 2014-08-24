@@ -3,6 +3,7 @@ var Phaser = require('phaser');
 var assets = {
     images: [
         ['pixel', 'assets/gfx/pix.png', 1, 1],
+        ['logo', 'assets/gfx/splash_title.png', 598, 158]
     ],
     spritesheets: [
         ['player', 'assets/gfx/player-test.png', 60, 66],
