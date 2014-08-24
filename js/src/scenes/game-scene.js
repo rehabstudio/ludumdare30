@@ -10,7 +10,8 @@ var UI = {
 };
 
 var Environment = {
-    Starfield: require('../environ/starfield')
+    Starfield: require('../environ/starfield'),
+    StarBG: require('../environ/starbg')
 }
 
 var Powerups = {
@@ -37,16 +38,17 @@ GameScene.prototype.init = function(config){
 
     this.game.world.setBounds(-1000, -1000, 2000, 2000);
 
-    _addPlayer.call(this);
-    _configCamera.call(this);
-
     _addStarfield.call(this);
+    _addPlayer.call(this);
+
+    _configCamera.call(this);
 
 };
 
 GameScene.prototype.update = function(){
 
     this.player.update();
+    this.starbg.update();
 
 }
 
@@ -73,7 +75,13 @@ function _configCamera() {
 }
 
 function _addStarfield() {
+    this.starbg = new Environment.StarBG(this);
+
+    this.add.existing(this.starbg);
+    this.sprites.push(this.starbg);
+
     this.stars = new Environment.Starfield(this.game, this.game.width/2, this.game.height/2);
+
 }
 
 module.exports = GameScene;

@@ -29,7 +29,7 @@ var Starfield = function(game, x, y){
 
     emitter.start(false, 3000, 15);
 
-    console.log('emitter', emitter);
+    //console.log('emitter', emitter);
 
 };
 

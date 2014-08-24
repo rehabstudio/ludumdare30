@@ -7,6 +7,7 @@ var assets = {
     spritesheets: [
         ['player', 'assets/gfx/player-test.png', 56, 62],
         ['bullet', 'assets/gfx/bullet-test.png', 5, 7],
+        ['bgtest', 'assets/gfx/bgtest.jpg', 512, 512]
     ],
     tilemaps: [
 
