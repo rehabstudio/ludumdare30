@@ -1,0 +1,74 @@
+var Phaser = require('phaser');
+
+var assets = {
+    images: [
+        ['pixel', 'assets/gfx/pix.png', 1, 1],
+    ],
+    spritesheets: [
+        ['player', 'assets/gfx/player-test.png', 56, 62],
+    ],
+    tilemaps: [
+
+    ],
+    fonts: [
+
+    ]
+};
+
+function preloadAssets(game){
+    var idx;
+
+    //load all images
+    console.log('Preloading images:');
+    for (idx = 0; idx < assets.images.length; idx++){
+        console.log("\t" + assets.images[idx][0] + ": " +assets.images[idx][1]);
+        game.load.image(
+            assets.images[idx][0],
+            assets.images[idx][1],
+            assets.images[idx][2],
+            assets.images[idx][3]
+        );
+    }
+
+    //load all spritesheets
+    console.log('Preloading spritesheets:');
+    for (idx = 0; idx < assets.spritesheets.length; idx++){
+        console.log("\t" + assets.spritesheets[idx][0] + ": " +assets.spritesheets[idx][1]);
+        game.load.spritesheet(
+            assets.spritesheets[idx][0],
+            assets.spritesheets[idx][1],
+            assets.spritesheets[idx][2],
+            assets.spritesheets[idx][3]
+        );
+    }
+
+    //load all tilemaps
+    console.log('Preloading tilemaps:');
+    for (idx = 0; idx < assets.tilemaps.length; idx++){
+        console.log("\t" + assets.tilemaps[idx][0] + ": " +assets.tilemaps[idx][1]);
+        game.load.tilemap(
+            assets.tilemaps[idx][0],
+            assets.tilemaps[idx][1],
+            assets.tilemaps[idx][2],
+            assets.tilemaps[idx][3]
+        );
+    }
+
+    //load all fonts
+    console.log('Preloading bitmap fonts:');
+    for (idx =0; idx < assets.fonts.length; idx++){
+        console.log("\t" + assets.fonts[idx][0] + ": " +assets.fonts[idx][1]);
+        game.load.bitmapFont(
+            assets.fonts[0],
+            assets.fonts[1],
+            assets.fonts[2]
+        );
+    }
+
+    //add the rest of the preloaders
+};
+
+module.exports = {
+    assets: assets,
+    preload: preloadAssets
+};

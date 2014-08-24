@@ -1,0 +1,10 @@
+body {
+    background: #111;
+    color: #999;
+}
+
+#stage {
+    width: 800px;
+    margin: 10px auto;
+    cursor: crosshair;
+}
