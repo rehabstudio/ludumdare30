@@ -16,6 +16,8 @@ var Enemy = function(scene){
 
     this.speed = Math.random()*10 + 15;
 
+    this.PARTICLE_LIFE = 500;
+
     this.score = 250;
 
     this.bulletSpeed = 1000;
@@ -79,7 +81,9 @@ Enemy.prototype.fire = function() {
 
 Enemy.prototype.die = function() {
     // play death anim
+    explode.call(this);
     this.destroy();
+
     this.scene.addToScore(this.score);
 };
 
@@ -93,6 +97,26 @@ function _setupEnemyBullets() {
     this.bullets.setAll('lifespan', this.bulletLifespan);
     this.bullets.setAll('outOfBoundsKill', true);
     this.bullets.setAll('checkWorldBounds', true);
+}
+
+function explode() {
+    var emitter = this.game.add.emitter(this.x, this.y, 10);
+    emitter.makeParticles('pixel');
+    emitter.setAlpha(1, 0, this.PARTICLE_LIFE, Phaser.Easing.Linear.In);
+    emitter.minParticleScale = 10;
+    emitter.maxParticleScale = 40;
+    emitter.minRotation = 0;
+    emitter.maxRotation = 0;
+    emitter.setYSpeed(-200, 200);
+    emitter.setXSpeed(-200, 200);
+    emitter.gravity = 0;
+    emitter.forEach(function(particle) {
+        particle.tint = 0xff0000;
+    });
+    emitter.start(true, this.PARTICLE_LIFE, null, 10 + Math.random() * 5);
+    setTimeout(function() {
+        emitter.destroy();
+    }, this.PARTICLE_LIFE);
 }
 
 

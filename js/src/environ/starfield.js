@@ -39,7 +39,7 @@ Starfield.prototype.constructor = Starfield;
 Starfield.prototype._createStarImage = function() {
 
     var c = document.createElement('canvas');
-    c.width = 2, c.height=2;
+    c.width = 5, c.height=5;
     var ctx = c.getContext('2d');
 
     ctx.fillStyle = '#ffffff';
