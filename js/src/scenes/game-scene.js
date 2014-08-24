@@ -52,6 +52,8 @@ GameScene.prototype.init = function(config){
 
 GameScene.prototype.update = function(){
 
+    this.physics.arcade.collide(this.player.bullets, this.enemies, this.playerBulletHitsEnemy, null, this);
+
     this.player.update();
     this.starbg.update();
 
@@ -65,6 +67,12 @@ GameScene.prototype.render = function(){
 
     this.player.onRender();
 
+};
+
+GameScene.prototype.playerBulletHitsEnemy = function(bullet, enemy) {
+    console.log('player bullet hit enemy');
+    bullet.kill();
+    enemy.die();
 };
 
 function _addPlayer() {

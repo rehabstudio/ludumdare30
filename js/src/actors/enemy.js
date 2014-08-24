@@ -5,6 +5,8 @@ var Enemy = function(scene){
     Phaser.Sprite.call(this, scene.game, 0, 0, 'enemy', 0);
     this.game.physics.enable(this, Phaser.Physics.ARCADE);
 
+    this.body.immovable = true;
+
     this.x = scene.game.world.randomX;
     this.y = scene.game.world.randomY;
     this.angle = scene.game.rnd.angle();
@@ -71,6 +73,13 @@ Enemy.prototype.fire = function() {
             this._lastFireTime = this.game.time.now + this.fireRate;
         }
     }
+};
+
+Enemy.prototype.die = function() {
+    console.log('Enemy died');
+
+    // play death anim
+    this.destroy();
 };
 
 function _setupEnemyBullets() {
