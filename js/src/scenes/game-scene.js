@@ -35,6 +35,8 @@ GameScene.prototype.init = function(config){
     this.config = config;
     this.sprites = [];
 
+    this.game.world.setBounds(-1000, -1000, 2000, 2000);
+
     _addPlayer.call(this);
     _configCamera.call(this);
 

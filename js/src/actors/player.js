@@ -5,6 +5,9 @@ var Player = function(scene){
     Phaser.Sprite.call(this, scene.game, 0, 0, 'player', 0);
     this.game.physics.enable(this, Phaser.Physics.ARCADE);
     //this.body.setSize(this.width*0.4, this.height*0.35, 0, this.height*0.2);
+    //
+    this.body.collideWorldBounds = true;
+
     this.scale.x = this.scale.y = this.baseScale = 0.6;
     this.anchor.setTo(0.5, 0.5);
 
@@ -71,11 +74,7 @@ Player.prototype.updateSpeed = function(){
 };
 
 Player.prototype.lookAtPointer = function() {
-    var targetAngle = this.game.math.angleBetween(
-        this.x, this.y,
-        this.game.input.activePointer.x, this.game.input.activePointer.y
-    );
-    this.rotation = targetAngle + 1.57079633; // 90 degrees
+    this.rotation = this.game.physics.arcade.angleToPointer(this) + 1.57079633; // +90 degrees;
 };
 
 
