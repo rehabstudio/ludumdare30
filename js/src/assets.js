@@ -6,6 +6,7 @@ var assets = {
     ],
     spritesheets: [
         ['player', 'assets/gfx/player-test.png', 56, 62],
+        ['enemy', 'assets/gfx/mob-test.png', 83, 104],
         ['bullet', 'assets/gfx/bullet-test.png', 5, 7],
         ['bgtest', 'assets/gfx/bg_tile.jpg', 256, 256]
     ],

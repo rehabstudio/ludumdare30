@@ -4,9 +4,9 @@ var StarBG = function(scene){
 
     Phaser.TileSprite.call(this, scene.game, 0, 0, scene.game.width, scene.game.height, 'bgtest', 0);
     this.fixedToCamera = true;
-    this.alpha = 0.3;
+    this.alpha = 1;
 
-    this.parallax = 0.2;
+    this.parallax = 0.1;
 
     this.scene = scene;
 

@@ -3,7 +3,8 @@ var Phaser = require('phaser');
 var Scene = require('./base');
 
 var Actors = {
-    Player: require('../actors/player')
+    Player: require('../actors/player'),
+    Enemy: require('../actors/enemy')
 };
 
 var UI = {
@@ -33,6 +34,8 @@ GameScene.prototype.init = function(config){
 
     window.startTime = this.game.time.now;
 
+    this._numEnemies = 20;
+
     this.config = config;
     this.sprites = [];
 
@@ -40,6 +43,8 @@ GameScene.prototype.init = function(config){
 
     _addStarfield.call(this);
     _addPlayer.call(this);
+
+    _setupEnemies.call(this);
 
     _configCamera.call(this);
 
@@ -82,6 +87,15 @@ function _addStarfield() {
 
     this.stars = new Environment.Starfield(this.game, this.game.width/2, this.game.height/2);
 
+}
+
+function _setupEnemies() {
+    this.enemies = this.game.add.group();
+
+    for(var i = 0; i < this._numEnemies; i++) {
+        var nme = new Actors.Enemy(this);
+        this.enemies.add(nme);
+    }
 }
 
 module.exports = GameScene;
