@@ -8,6 +8,7 @@ var Actors = {
 };
 
 var UI = {
+    Score: require('../ui/score')
 };
 
 var Environment = {
@@ -34,6 +35,8 @@ GameScene.prototype.init = function(config){
 
     window.startTime = this.game.time.now;
 
+
+
     this._numEnemies = 20;
 
     this.config = config;
@@ -47,6 +50,8 @@ GameScene.prototype.init = function(config){
     _setupEnemies.call(this);
 
     _configCamera.call(this);
+
+    this.score = new UI.Score(this);
 
 };
 
@@ -70,9 +75,12 @@ GameScene.prototype.render = function(){
 };
 
 GameScene.prototype.playerBulletHitsEnemy = function(bullet, enemy) {
-    console.log('player bullet hit enemy');
     bullet.kill();
     enemy.die();
+};
+
+GameScene.prototype.addToScore = function(amt) {
+    this.score.addAmount(amt);
 };
 
 function _addPlayer() {

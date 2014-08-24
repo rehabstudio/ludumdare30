@@ -16,6 +16,8 @@ var Enemy = function(scene){
 
     this.speed = Math.random()*10 + 15;
 
+    this.score = 250;
+
     this.bulletSpeed = 1000;
     this.bulletLifespan = 2000;
 
@@ -76,10 +78,9 @@ Enemy.prototype.fire = function() {
 };
 
 Enemy.prototype.die = function() {
-    console.log('Enemy died');
-
     // play death anim
     this.destroy();
+    this.scene.addToScore(this.score);
 };
 
 function _setupEnemyBullets() {

@@ -14,7 +14,6 @@ TitleScene.prototype.constructor = TitleScene;
 
 
 TitleScene.prototype.create = function(){
-    console.log('SCENE: Title');
     _displayStartText.call(this);
 };
 
