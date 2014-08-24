@@ -16,7 +16,7 @@ var Player = function(scene){
     this.damping = 1.05;
 
     this.bulletSpeed = 2000;
-    this.bulletLifespan = 2000;
+    this.bulletLifespan = 1000;
 
     this.fireRate = 200;
     this._lastFireTime = this.game.time.now;
