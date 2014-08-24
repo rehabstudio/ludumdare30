@@ -25,7 +25,7 @@ var Starfield = function(game, x, y){
 
     emitter.gravity = 0;
 
-    emitter.fixedToCamera = false;
+    emitter.fixedToCamera = true;
 
     emitter.start(false, 3000, 15);
 
