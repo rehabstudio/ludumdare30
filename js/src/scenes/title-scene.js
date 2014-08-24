@@ -2,9 +2,6 @@ var Phaser = require('phaser');
 var STRINGS = require('strings');
 var Scene = require('./base');
 
-var UI = {
-};
-
 var TitleScene = function(){
     Scene.prototype.constructor.call(this);
 };
@@ -14,6 +11,7 @@ TitleScene.prototype.constructor = TitleScene;
 
 
 TitleScene.prototype.create = function(){
+    _displayLogo.call(this);
     _displayStartText.call(this);
 };
 
@@ -31,6 +29,12 @@ TitleScene.prototype.destroy = function(){
 TitleScene.prototype.render = function(){
 
 };
+
+function _displayLogo() {
+    var logo = this.game.add.sprite(this.game.width * 0.5, 200, 'logo');
+    logo.anchor.setTo(0.5);
+    logo.fixedToCamera = true;
+}
 
 function _displayStartText() {
     var style = {

@@ -7,6 +7,7 @@ var Player = function(scene){
     //this.body.setSize(this.width*0.4, this.height*0.35, 0, this.height*0.2);
     //
     this.body.collideWorldBounds = true;
+    this.body.drag = 0.5;
 
     //this.scale.x = this.scale.y = this.baseScale = 0.6;
     this.anchor.setTo(0.5, 0.5);
