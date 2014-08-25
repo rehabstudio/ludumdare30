@@ -30,6 +30,8 @@ function fireAtPlayer() {
 
     var targ = this.scene.player;
 
+    if(!targ.active || targ._isDead) return false;
+
     if(this.game.physics.arcade.distanceBetween(this, targ) > this.fireDistance) return false;
 
     this.fire();

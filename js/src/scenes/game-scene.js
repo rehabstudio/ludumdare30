@@ -131,6 +131,7 @@ GameScene.prototype.usePortal = function(player, portal) {
     player._isWarping = true;
     this.enemyBullets.forEach(function(b) { b.kill(); });
     player.kill();
+    player.active = false;
     this.player.sounds.warp.play();
     this.player.fireSpawnParticles();
     this.game.time.events.add(2000, function() {
