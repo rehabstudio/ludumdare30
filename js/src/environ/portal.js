@@ -3,6 +3,8 @@ var Phaser = require('phaser');
 var Portal = function(scene) {
 
     Phaser.Sprite.call(this, scene.game, 0, 0, 'portal', 0);
+    this.game.physics.enable(this, Phaser.Physics.ARCADE);
+    this.body.immovable = true;
 
     this.scene = scene;
     this.anchor.set(0.5,0.5);
@@ -15,6 +17,8 @@ var Portal = function(scene) {
 
     this.rotateSpeed = 0.01;
 
+    this.isOpen = false;
+
 
 }
 
@@ -25,7 +29,7 @@ Portal.prototype.createEmitter = function() {
     console.log('Portal created');
     this.emitter = this.scene.add.emitter(this.x, this.y, 5);
 
-    this.close();
+    this.open();
 }
 
 Portal.prototype.update = function() {
@@ -37,6 +41,7 @@ Portal.prototype.open = function() {
     this.rotateSpeed = 0.03;
     this.alpha = 1;
     emitOpen(this.emitter);
+    this.isOpen = true;
 
 }
 
@@ -45,6 +50,7 @@ Portal.prototype.close = function() {
     this.rotateSpeed = 0.01;
     this.alpha = 0.4;
     emitClosed(this.emitter);
+    this.isOpen = false;
 
 }
 

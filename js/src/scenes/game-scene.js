@@ -73,6 +73,8 @@ GameScene.prototype.update = function(){
         this.physics.arcade.collide(this.player, this.enemies, this.enemyHitsPlayer, null, this);
         this.physics.arcade.collide(this.player, this.enemyBullets, this.enemyBulletHitsPlayer, null, this);
     }
+    this.physics.arcade.overlap(this.player, this.portals, this.playerOverPortal, null, this);
+
     this.player.update();
     this.starbg.update();
     this.cursor.update();
@@ -101,6 +103,25 @@ GameScene.prototype.enemyHitsPlayer = function(player, enemy) {
 GameScene.prototype.enemyBulletHitsPlayer = function(player, bullet) {
     bullet.kill();
     this.playerLoseLife(player);
+};
+
+GameScene.prototype.playerOverPortal = function(player, portal) {
+    if(!portal.isOpen) return false();
+
+    if(player.actionButton.isDown && !player._isWarping) {
+        this.usePortal(player, portal);
+    }
+};
+
+GameScene.prototype.usePortal = function(player, portal) {
+
+    player._isWarping = true;
+    this.enemyBullets.forEach(function(b) { b.kill(); });
+    player.kill();
+    this.game.time.events.add(2000, function() {
+        this.game.state.start('game-scene', true, false);
+    }, this);
+
 };
 
 GameScene.prototype.playerLoseLife = function(player) {
@@ -155,11 +176,12 @@ function _addStarfield() {
 
 function _setupPortals() {
 
-    this.portal = new Environment.Portal(this);
+    this.portals = this.game.add.group();
 
-    this.add.existing(this.portal);
+    var portal = new Environment.Portal(this);
 
-    this.portal.createEmitter();
+    this.portals.add(portal);
+    portal.createEmitter();
 
 }
 

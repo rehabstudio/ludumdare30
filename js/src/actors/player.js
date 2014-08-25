@@ -16,6 +16,7 @@ var Player = function(scene){
 
     this._isDead = false;
     this._isInvul = false;
+    this._isWarping = false;
 
     this.spawnInvulTime = 4000;
 
@@ -141,11 +142,11 @@ Player.prototype.die = function() {
     this.kill();
 };
 
-Player.prototype.spawn = function() {
+Player.prototype.spawn = function(noLifeLoss) {
     this.setInvul();
     spawnIn.call(this);
     this._isDead = false;
-    this.lives--;
+    if(! noLifeLoss) this.lives--;
     this.revive();
     this.body.velocity.x = this.body.velocity.y = 0;
 
