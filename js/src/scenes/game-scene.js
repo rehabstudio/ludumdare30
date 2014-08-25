@@ -58,9 +58,10 @@ GameScene.prototype.init = function(config){
 GameScene.prototype.update = function(){
 
     this.physics.arcade.collide(this.player.bullets, this.enemies, this.playerBulletHitsEnemy, null, this);
-    this.physics.arcade.collide(this.player, this.enemies, this.enemyHitsPlayer, null, this);
-    this.physics.arcade.collide(this.player, this.enemyBullets, this.enemyHitsPlayer, null, this);
-
+    if(!this.player._isInvul) {
+        this.physics.arcade.collide(this.player, this.enemies, this.enemyHitsPlayer, null, this);
+        this.physics.arcade.collide(this.player, this.enemyBullets, this.enemyHitsPlayer, null, this);
+    }
     this.player.update();
     this.starbg.update();
 
@@ -82,11 +83,20 @@ GameScene.prototype.playerBulletHitsEnemy = function(bullet, enemy) {
 };
 
 GameScene.prototype.enemyHitsPlayer = function(player, enemy) {
-    player.die();
+    this.playerLoseLife(player);
 };
 
 GameScene.prototype.enemyBulletHitsPlayer = function(player, bullet) {
+    this.playerLoseLife(player);
+};
+
+GameScene.prototype.playerLoseLife = function(player) {
+
     player.die();
+    this.game.time.events.add(2000, function() {
+        player.spawn();
+    }, this);
+
 };
 
 GameScene.prototype.addToScore = function(amt) {

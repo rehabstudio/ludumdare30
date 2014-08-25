@@ -13,6 +13,9 @@ var Player = function(scene){
     this.anchor.setTo(0.5, 0.5);
 
     this._isDead = false;
+    this._isInvul = false;
+
+    this.spawnInvulTime = 4000;
 
     this.maxSpeed = 5;
     this.acceleration  = 20;
@@ -53,6 +56,8 @@ Player.prototype.update = function(){
 
     if(this._isDead) return false;
 
+    if(this._isInvul) this.doInvulFlash();
+
     this.handleInput();
     this.updateSpeed();
     this.lookAtPointer();
@@ -60,6 +65,20 @@ Player.prototype.update = function(){
 
 Player.prototype.onRender = function(){
 
+};
+
+Player.prototype.setInvul = function() {
+    this._isInvul = true;
+
+};
+
+Player.prototype.doInvulFlash = function() {
+    this.alpha = (this.game.time.now % 2);
+};
+
+Player.prototype.unsetInvul = function() {
+    this._isInvul = false;
+    this.alpha = 1;
 };
 
 Player.prototype.handleInput = function() {
@@ -121,6 +140,18 @@ Player.prototype.die = function() {
     this.kill();
 };
 
+Player.prototype.spawn = function() {
+    this.setInvul();
+    spawnIn.call(this);
+    this._isDead = false;
+    this.revive();
+    this.body.velocity.x = this.body.velocity.y = 0;
+    var self = this;
+    setTimeout(function() {
+        self.unsetInvul();
+    }, this.spawnInvulTime);
+};
+
 function _setupPlayerBullets() {
     this.bullets = this.game.add.group();
     this.bullets.enableBody = true;
@@ -151,6 +182,26 @@ function explode() {
     setTimeout(function() {
         emitter.destroy();
     }, this.PARTICLE_LIFE);
+}
+
+function spawnIn() {
+
+    var emitter = this.game.add.emitter(this.x, this.y, 20);
+    emitter.makeParticles('pixel');
+    emitter.minParticleScale = 3;
+    emitter.maxParticleScale = 6;
+    emitter.minRotation = 0;
+    emitter.maxRotation = 0;
+    emitter.setYSpeed(-300, 300);
+    emitter.setXSpeed(-300, 300);
+    emitter.gravity = 0;
+    emitter.forEach(function(particle) {
+        particle.tint = 0xffffff;
+    });
+    emitter.start(true, 300, null, 10 + Math.random() * 5);
+    setTimeout(function() {
+        emitter.destroy();
+    }, 300);
 }
 
 
