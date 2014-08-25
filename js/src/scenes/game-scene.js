@@ -100,15 +100,29 @@ GameScene.prototype.enemyBulletHitsPlayer = function(player, bullet) {
 GameScene.prototype.playerLoseLife = function(player) {
 
     player.die();
-    this.game.time.events.add(2000, function() {
-        player.spawn();
-    }, this);
+
+    if(player.lives > 0) {
+        this.game.time.events.add(2000, function() {
+            player.spawn();
+        }, this);
+    } else {
+        this.gameOver();
+    }
 
 };
 
 GameScene.prototype.addToScore = function(amt) {
     this.score.addAmount(amt);
 };
+
+GameScene.prototype.gameOver = function() {
+    this.gameover = this.add.sprite(this.game.width * 0.5, this.game.height * 0.5, 'gameOverText');
+    this.gameover.fixedToCamera = true;
+    this.gameover.anchor.setTo(0.5,0.5);
+    this.game.time.events.add(5000, function() {
+        this.game.state.start('title-scene', true, false);
+    }, this);
+}
 
 function _addPlayer() {
     this.player = new Actors.Player(this);

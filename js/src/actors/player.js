@@ -12,6 +12,8 @@ var Player = function(scene){
     //this.scale.x = this.scale.y = this.baseScale = 0.6;
     this.anchor.setTo(0.5, 0.5);
 
+    this.lives = 3;
+
     this._isDead = false;
     this._isInvul = false;
 
@@ -144,6 +146,7 @@ Player.prototype.spawn = function() {
     this.setInvul();
     spawnIn.call(this);
     this._isDead = false;
+    this.lives--;
     this.revive();
     this.body.velocity.x = this.body.velocity.y = 0;
 

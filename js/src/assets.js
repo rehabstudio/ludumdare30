@@ -5,6 +5,7 @@ var assets = {
         ['pixel', 'assets/gfx/pix.png', 1, 1],
         ['logo', 'assets/gfx/splash_title.png', 598, 158],
         ['startText', 'assets/gfx/press_start.png', 198, 33],
+        ['gameOverText', 'assets/gfx/gameover_txt.png', 430, 78]
     ],
     spritesheets: [
         ['player', 'assets/gfx/player-test.png', 40, 44],
