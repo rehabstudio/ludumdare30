@@ -146,6 +146,9 @@ GameScene.prototype.addToScore = function(amt) {
 };
 
 GameScene.prototype.gameOver = function() {
+
+    this.game.worldManager.clearData();
+
     this.gameover = this.add.sprite(this.game.width * 0.5, this.game.height * 0.5, 'gameOverText');
     this.gameover.fixedToCamera = true;
     this.gameover.anchor.setTo(0.5,0.5);
