@@ -87,6 +87,7 @@ GameScene.prototype.enemyHitsPlayer = function(player, enemy) {
 };
 
 GameScene.prototype.enemyBulletHitsPlayer = function(player, bullet) {
+    bullet.kill();
     this.playerLoseLife(player);
 };
 
