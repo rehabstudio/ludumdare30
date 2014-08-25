@@ -17,7 +17,7 @@ var Score = function(scene) {
 };
 
 Score.prototype.addAmount = function(amt) {
-    console.log('score addAmount', amt);
+
     this.value += amt;
     this.update();
 }

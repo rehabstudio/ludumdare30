@@ -73,8 +73,8 @@ BaseEnemy.prototype.fire = function() {
         if (bullet)
         {
             bullet.reset(this.x, this.y);
-            bullet.rotation = this.rotation;
-            this.game.physics.arcade.velocityFromRotation(bullet.rotation, this.bulletSpeed, bullet.body.velocity);
+            bullet.rotation = this.rotation - 1.57079633;
+            this.game.physics.arcade.velocityFromRotation(this.rotation, this.bulletSpeed, bullet.body.velocity);
             this._lastFireTime = this.game.time.now + this.fireRate;
         }
     }

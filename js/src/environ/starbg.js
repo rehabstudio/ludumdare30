@@ -2,7 +2,7 @@ var Phaser = require('phaser');
 
 var StarBG = function(scene){
 
-    Phaser.TileSprite.call(this, scene.game, 0, 0, scene.game.width, scene.game.height, 'bgtest', 0);
+    Phaser.TileSprite.call(this, scene, 0, 0, scene.game.width, scene.game.height, 'bgtest', 0);
     this.fixedToCamera = true;
     this.alpha = 1;
 
@@ -12,7 +12,7 @@ var StarBG = function(scene){
 
     this.scene = scene;
 
-    console.log(this);
+    //console.log(this);
 
 };
 

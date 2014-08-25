@@ -15,7 +15,8 @@ var UI = {
 
 var Environment = {
     Starfield: require('../environ/starfield'),
-    StarBG: require('../environ/starbg')
+    StarBG: require('../environ/starbg'),
+    Portal: require('../environ/portal')
 }
 
 var Powerups = {
@@ -47,6 +48,7 @@ GameScene.prototype.init = function(config){
     this.game.world.setBounds(-1000, -1000, 2000, 2000);
 
     _addStarfield.call(this);
+    _setupPortals.call(this);
     _addPlayer.call(this);
     _setupEnemyBullets.call(this);
     _setupEnemies.call(this);
@@ -124,7 +126,7 @@ GameScene.prototype.gameOver = function() {
     this.gameover = this.add.sprite(this.game.width * 0.5, this.game.height * 0.5, 'gameOverText');
     this.gameover.fixedToCamera = true;
     this.gameover.anchor.setTo(0.5,0.5);
-    this.game.time.events.add(5000, function() {
+    this.time.events.add(5000, function() {
         this.game.state.start('title-scene', true, false);
     }, this);
 }
@@ -151,6 +153,16 @@ function _addStarfield() {
 
 }
 
+function _setupPortals() {
+
+    this.portal = new Environment.Portal(this);
+
+    this.add.existing(this.portal);
+
+    this.portal.createEmitter();
+
+}
+
 function _setupEnemies() {
     this.enemies = this.game.add.group();
 
@@ -169,11 +181,17 @@ function _setupEnemyBullets() {
     this.enemyBullets.setAll('anchor.x', 0.5);
     this.enemyBullets.setAll('anchor.y', 0.5);
     this.enemyBullets.setAll('lifespan', 2000);
-    this.enemyBullets.forEach(function(bullet) {
+    this.enemyBullets.setAll('scale.x', 2);
+    this.enemyBullets.setAll('scale.y', 2);
+    /*this.enemyBullets.forEach(function(bullet) {
         bullet.tint = 0xff0000;
-    });
+    });*/
     this.enemyBullets.setAll('outOfBoundsKill', true);
     this.enemyBullets.setAll('checkWorldBounds', true);
+
+    this.time.events.loop(80, function() {
+        this.enemyBullets.alpha = (this.enemyBullets.alpha == 1) ? 0.5 : 1;
+    }, this);
 }
 
 module.exports = GameScene;

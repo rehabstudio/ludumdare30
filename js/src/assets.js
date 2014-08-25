@@ -12,7 +12,8 @@ var assets = {
         ['enemy', 'assets/gfx/mob-test.png', 51, 64],
         ['bullet', 'assets/gfx/bullet-test.png', 5, 7],
         ['bgtest', 'assets/gfx/bg_tile.jpg', 256, 256],
-        ['cursor', 'assets/gfx/cursor.png', 80, 44]
+        ['cursor', 'assets/gfx/cursor.png', 80, 44],
+        ['portal', 'assets/gfx/portal2.png', 115, 107]
     ],
     tilemaps: [
 

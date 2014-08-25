@@ -122,7 +122,6 @@ Player.prototype.fire = function() {
 
     if (this.game.time.now > this._lastFireTime)
     {
-        console.log('fire');
         var bullet = this.bullets.getFirstExists(false);
 
         if (bullet)
