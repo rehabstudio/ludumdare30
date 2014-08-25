@@ -4,13 +4,14 @@ var assets = {
     images: [
         ['pixel', 'assets/gfx/pix.png', 1, 1],
         ['logo', 'assets/gfx/splash_title.png', 598, 158],
-        ['startText', 'assets/gfx/press_start.png', 198, 33]
+        ['startText', 'assets/gfx/press_start.png', 198, 33],
     ],
     spritesheets: [
         ['player', 'assets/gfx/player-test.png', 40, 44],
         ['enemy', 'assets/gfx/mob-test.png', 51, 64],
         ['bullet', 'assets/gfx/bullet-test.png', 5, 7],
-        ['bgtest', 'assets/gfx/bg_tile.jpg', 256, 256]
+        ['bgtest', 'assets/gfx/bg_tile.jpg', 256, 256],
+        ['cursor', 'assets/gfx/cursor.png', 80, 44]
     ],
     tilemaps: [
 

@@ -34,6 +34,7 @@ Game.prototype.onCreate = function(){
     this.physics.startSystem(Phaser.Physics.ARCADE);
 
     _changeState.call(this, 'title-scene');
+
 };
 
 Game.prototype.startGame = function() {

@@ -8,7 +8,8 @@ var Actors = {
 };
 
 var UI = {
-    Score: require('../ui/score')
+    Score: require('../ui/score'),
+    Cursor: require('../ui/cursor')
 };
 
 var Environment = {
@@ -51,6 +52,10 @@ GameScene.prototype.init = function(config){
 
     _configCamera.call(this);
 
+    this.cursor = new UI.Cursor(this);
+    this.add.existing(this.cursor);
+    this.cursor.bringToTop();
+
     this.score = new UI.Score(this);
 
 };
@@ -60,10 +65,11 @@ GameScene.prototype.update = function(){
     this.physics.arcade.collide(this.player.bullets, this.enemies, this.playerBulletHitsEnemy, null, this);
     if(!this.player._isInvul) {
         this.physics.arcade.collide(this.player, this.enemies, this.enemyHitsPlayer, null, this);
-        this.physics.arcade.collide(this.player, this.enemyBullets, this.enemyHitsPlayer, null, this);
+        this.physics.arcade.collide(this.player, this.enemyBullets, this.enemyBulletHitsPlayer, null, this);
     }
     this.player.update();
     this.starbg.update();
+    this.cursor.update();
 
 }
 
