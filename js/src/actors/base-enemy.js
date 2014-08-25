@@ -104,9 +104,9 @@ function explode() {
         particle.tint = 0xff0000;
     });
     emitter.start(true, this.PARTICLE_LIFE, null, 10 + Math.random() * 5);
-    setTimeout(function() {
+    this.game.time.events.add(this.PARTICLE_LIFE, function() {
         emitter.destroy();
-    }, this.PARTICLE_LIFE);
+    }, this);
 }
 
 module.exports = BaseEnemy;

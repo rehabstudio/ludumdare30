@@ -138,8 +138,6 @@ function _setupEnemies() {
 function _setupEnemyBullets() {
     this.enemyBullets = this.game.add.group();
 
-    console.log(this.enemyBullets, this.game);
-
     this.enemyBullets.enableBody = true;
     this.enemyBullets.physicsBodyType = Phaser.Physics.ARCADE;
     this.enemyBullets.createMultiple(40, 'bullet', 0, false);

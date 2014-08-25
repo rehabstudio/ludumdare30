@@ -146,10 +146,10 @@ Player.prototype.spawn = function() {
     this._isDead = false;
     this.revive();
     this.body.velocity.x = this.body.velocity.y = 0;
-    var self = this;
-    setTimeout(function() {
-        self.unsetInvul();
-    }, this.spawnInvulTime);
+
+    this.game.time.events.add(this.spawnInvulTime, function() {
+        this.unsetInvul();
+    }, this);
 };
 
 function _setupPlayerBullets() {
@@ -179,9 +179,9 @@ function explode() {
         particle.tint = 0x2299ff;
     });
     emitter.start(true, this.PARTICLE_LIFE, null, 10 + Math.random() * 5);
-    setTimeout(function() {
+    this.game.time.events.add(this.PARTICLE_LIFE, function() {
         emitter.destroy();
-    }, this.PARTICLE_LIFE);
+    }, this);
 }
 
 function spawnIn() {
@@ -199,9 +199,9 @@ function spawnIn() {
         particle.tint = 0xffffff;
     });
     emitter.start(true, 300, null, 10 + Math.random() * 5);
-    setTimeout(function() {
+    this.game.time.events.add(300, function() {
         emitter.destroy();
-    }, 300);
+    }, this);
 }
 
 

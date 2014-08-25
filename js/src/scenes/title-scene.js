@@ -18,10 +18,10 @@ TitleScene.prototype.create = function(){
     _displayStars.call(this);
     _displayRect.call(this);
     _displayLogo.call(this);
-    var self = this;
-    setTimeout(function() {
-        _displayStartText.call(self);
-    }, 3000);
+
+    this.game.time.events.add(3000, function() {
+        _displayStartText.call(this);
+    }, this);
     _displayCopyText.call(this);
 };
 
@@ -84,10 +84,10 @@ function _displayLogo() {
 function _displayStartText() {
     this.startText = this.add.sprite(this.game.width * 0.5, 500, 'startText');
     this.startText.anchor.setTo(0.5);
-    var tx = this.startText;
-    setInterval(function() {
-        tx.alpha = !tx.alpha;
-    }, 500);
+
+    this.game.time.events.loop(500, function() {
+        this.startText.alpha = !this.startText.alpha;
+    }, this);
 };
 
 function _waitForStart() {
@@ -125,9 +125,9 @@ function explode(emitter) {
         particle.tint = 0xff6600;
     });
     emitter.start(true, 2000, null, 10 + Math.random() * 5);
-    setTimeout(function() {
+    this.game.time.events.add(2000, function() {
         emitter.destroy();
-    }, 2000);
+    }, this);
 }
 
 module.exports = TitleScene;
