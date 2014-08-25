@@ -7,6 +7,8 @@ var Scenes = {
     title: require('./scenes/title-scene')
 };
 
+var WorldManager = require('./worlds.js');
+
 var Game = function(){
     Phaser.Game.prototype.constructor.call(
         this,
@@ -28,6 +30,8 @@ Game.prototype.onPreload = function(){
 
 Game.prototype.onCreate = function(){
 
+    this.worldManager = new WorldManager();
+
     this.state.add('title-scene', new Scenes.title(), false);
     this.state.add('game-scene', new Scenes.game(), false);
 
@@ -38,7 +42,7 @@ Game.prototype.onCreate = function(){
 };
 
 Game.prototype.startGame = function() {
-    _changeState.call(this, 'game-scene');
+     _changeState.call(this, 'game-scene');
 };
 
 Game.prototype.onPaused = function() {

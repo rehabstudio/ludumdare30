@@ -1,5 +1,7 @@
 var Phaser = require('phaser');
 
+
+
 var Score = function(scene) {
 
     this.value = 0;

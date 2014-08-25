@@ -38,8 +38,6 @@ GameScene.prototype.init = function(config){
 
     window.startTime = this.game.time.now;
 
-
-
     this._numEnemies = 20;
 
     this.config = config;
@@ -62,6 +60,9 @@ GameScene.prototype.init = function(config){
     this.score = new UI.Score(this);
     this.lives = new UI.Lives(this);
 
+    this.game.worldManager.recoverData(this);
+
+    this.score.update();
     this.lives.updateFromPlayer(this.player);
 
 };
@@ -119,6 +120,7 @@ GameScene.prototype.usePortal = function(player, portal) {
     this.enemyBullets.forEach(function(b) { b.kill(); });
     player.kill();
     this.game.time.events.add(2000, function() {
+        this.game.worldManager.storeData(this);
         this.game.state.start('game-scene', true, false);
     }, this);
 
@@ -157,6 +159,8 @@ function _addPlayer() {
     this.player.setPosition(this.game.width/2, this.game.height/2);
     this.add.existing(this.player);
     this.sprites.push(this.player);
+
+    if(this.game.worldManager.data) this.player.lives = this.game.worldManager.data.lives;
 }
 
 function _configCamera() {
