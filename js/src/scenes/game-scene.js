@@ -9,6 +9,7 @@ var Actors = {
 
 var UI = {
     Score: require('../ui/score'),
+    Lives: require('../ui/lives'),
     Cursor: require('../ui/cursor')
 };
 
@@ -57,6 +58,9 @@ GameScene.prototype.init = function(config){
     this.cursor.bringToTop();
 
     this.score = new UI.Score(this);
+    this.lives = new UI.Lives(this);
+
+    this.lives.updateFromPlayer(this.player);
 
 };
 
@@ -104,6 +108,7 @@ GameScene.prototype.playerLoseLife = function(player) {
     if(player.lives > 0) {
         this.game.time.events.add(2000, function() {
             player.spawn();
+            this.lives.updateFromPlayer(player);
         }, this);
     } else {
         this.gameOver();

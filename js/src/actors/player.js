@@ -12,7 +12,7 @@ var Player = function(scene){
     //this.scale.x = this.scale.y = this.baseScale = 0.6;
     this.anchor.setTo(0.5, 0.5);
 
-    this.lives = 3;
+    this.lives = 2;
 
     this._isDead = false;
     this._isInvul = false;
