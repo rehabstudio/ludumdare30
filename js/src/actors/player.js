@@ -43,7 +43,14 @@ var Player = function(scene){
     this.actionButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     this.fireButton = this.game.input.activePointer;
 
+    this.active = false;
+    this.kill();
+
     this.scene = scene;
+
+    this.scene.time.events.add(1000, function() {
+        this.spawn(true);
+    }, this);
 
 };
 
@@ -61,7 +68,7 @@ Player.prototype.update = function(){
 
     if(this._isInvul) this.doInvulFlash();
 
-    this.handleInput();
+    if(this.active) this.handleInput();
     this.updateSpeed();
     this.lookAtPointer();
 };
@@ -148,6 +155,7 @@ Player.prototype.spawn = function(noLifeLoss) {
     this._isDead = false;
     if(! noLifeLoss) this.lives--;
     this.revive();
+    this.active = true;
     this.body.velocity.x = this.body.velocity.y = 0;
 
     this.game.time.events.add(this.spawnInvulTime, function() {

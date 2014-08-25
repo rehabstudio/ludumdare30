@@ -1,6 +1,7 @@
 var Phaser = require('phaser');
 var STRINGS = require('strings');
 var Scene = require('./base');
+var config = require('config');
 
 var Environ = {
     StarBG: require('../environ/starbg')
@@ -98,13 +99,8 @@ function _waitForStart() {
 
 function _displayCopyText() {
 
-    var style = {
-        font: "24px VT323",
-        fill: "#caa",
-        stroke: "#000",
-        strokeThickness: 1,
-        align: "center"
-    };
+    var style = config.font.baseStyle;
+
     var text = this.add.text(this.game.width * 0.5, this.game.height - 60, STRINGS.copyText.toUpperCase(), style);
     text.anchor.setTo(0.5);
 }

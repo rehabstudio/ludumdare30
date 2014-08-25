@@ -1,9 +1,11 @@
 var Phaser = require('phaser');
+var _ = require('lodash');
 
-var WorldManager = function() {
+var WorldManager = function(game) {
 
 
     this._worlds = {};
+    this.game = game;
 
 };
 
@@ -35,11 +37,13 @@ WorldManager.prototype.generateNewWorld = function() {
 
     var worldName = genName(3);
 
+    var r = this.game.rnd;
+
     var worldOptions = {
         name: worldName,
-        mainColor: 0x33ff66,
+        mainColor: getRndTint(),
         starbg: {
-            backdrop: 3,
+            backdrop: r.integerInRange(0,9),
             parallax: 0.1
         },
         starfield: {
@@ -64,7 +68,7 @@ WorldManager.prototype.getWorldData = function(worldName) {
 
 var bits = ['gen','ry','ia','aia','nov','is','an','on','ia','sis','ph','py','ae','tr','qi','os','ni','th','ie','na','zi'];
 
-var genName = function(numBits) {
+function genName(numBits) {
   var str = '';
   for(var i = 0 ; i < numBits; i++) {
     str += _.sample(bits);
@@ -72,5 +76,16 @@ var genName = function(numBits) {
   return str;
 }
 
+function _c() {
+    return Math.floor(Math.random()*256).toString(16)
+}
+
+function getRndHex() {
+  return "#"+_c()+_c()+_c();
+}
+
+function getRndTint() {
+  return Phaser.Color.hexToRGB(getRndHex());
+}
 
 module.exports = WorldManager;

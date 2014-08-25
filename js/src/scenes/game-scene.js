@@ -1,5 +1,6 @@
 var Phaser = require('phaser');
-
+var config = require('config');
+var STRINGS = require('strings');
 var Scene = require('./base');
 
 var Actors = {
@@ -9,6 +10,7 @@ var Actors = {
 
 var UI = {
     Score: require('../ui/score'),
+    WorldName: require('../ui/worldname'),
     Lives: require('../ui/lives'),
     Cursor: require('../ui/cursor')
 };
@@ -45,6 +47,8 @@ GameScene.prototype.init = function(config){
 
     this.game.world.setBounds(-1000, -1000, 2000, 2000);
 
+    this._genWorld = this.game.worldManager.generateNewWorld();
+
     _addStarfield.call(this);
     _setupPortals.call(this);
     _addPlayer.call(this);
@@ -59,11 +63,16 @@ GameScene.prototype.init = function(config){
 
     this.score = new UI.Score(this);
     this.lives = new UI.Lives(this);
+    this.nameDisplay = new UI.WorldName(this);
 
     this.game.worldManager.recoverData(this);
 
     this.score.update();
     this.lives.updateFromPlayer(this.player);
+
+    this.nameDisplay.setValue(this._genWorld.name);
+
+    _showEntryName.call(this, this._genWorld.name, this._genWorld.mainColor);
 
 };
 
@@ -199,6 +208,33 @@ function _setupEnemies() {
         var nme = new Actors.Enemy(this);
         this.enemies.add(nme);
     }
+}
+
+function _showEntryName(name, color) {
+
+    var style = Object.create(config.font.baseStyle);
+    style.font = '36px VT323';
+    var enterText = this.add.text(this.game.width * 0.5, (this.game.height * 0.5) - 40, STRINGS.enteringLevel.toUpperCase(), style);
+    enterText.anchor.setTo(0.5);
+    enterText.fixedToCamera = true;
+
+    var bigStyle = Object.create(config.font.baseStyle);
+    bigStyle.font = '60px VT323';
+    bigStyle.stroke = '#ccc';
+    var nameText = this.add.text(this.game.width * 0.5, (this.game.height * 0.5) + 20, name.toUpperCase(), bigStyle);
+
+    nameText.anchor.setTo(0.5);
+    nameText.fixedToCamera = true;
+    var grd = nameText.context.createLinearGradient(0, 0, 0, nameText.canvas.height);
+    grd.addColorStop(0, Phaser.Color.getWebRGB(color));
+    grd.addColorStop(1, '#444444');
+    nameText.fill = grd;
+
+    this.time.events.add(2000, function() {
+        enterText.destroy();
+        nameText.destroy();
+    }, this);
+
 }
 
 function _setupEnemyBullets() {

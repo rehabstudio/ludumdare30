@@ -1,18 +1,12 @@
 var Phaser = require('phaser');
-
-
+var config = require('config');
 
 var Score = function(scene) {
 
     this.value = 0;
 
-    var style = {
-        font: "24px VT323",
-        fill: "#caa",
-        stroke: "#000",
-        strokeThickness: 1,
-        align: "center"
-    };
+    var style = config.font.baseStyle;
+
     this.text = scene.add.text(10, 10, this.value.toString(), style);
     this.text.fixedToCamera = true;
 

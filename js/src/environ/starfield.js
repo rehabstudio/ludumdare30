@@ -17,6 +17,8 @@ var Starfield = function(game, x, y){
     emitter.minParticleScale = 0.1;
     emitter.maxParticleScale = 0.5;
 
+    // TODO: make this scene-specific
+
     emitter.setYSpeed(-100, 100);
     emitter.setXSpeed(-100, 100);
 

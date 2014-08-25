@@ -23,6 +23,10 @@ var assets = {
     ]
 };
 
+for(var i = 0; i < 10; i++) {
+    assets.spritesheets.push(['bgstars_' + i, 'assets/gfx/bg_tile_' + i + '.jpg', 256, 256]);
+}
+
 function preloadAssets(game){
     var idx;
 

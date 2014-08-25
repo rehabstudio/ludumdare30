@@ -30,7 +30,7 @@ Game.prototype.onPreload = function(){
 
 Game.prototype.onCreate = function(){
 
-    this.worldManager = new WorldManager();
+    this.worldManager = new WorldManager(this);
 
     this.state.add('title-scene', new Scenes.title(), false);
     this.state.add('game-scene', new Scenes.game(), false);

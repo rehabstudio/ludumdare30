@@ -2,13 +2,15 @@ var Phaser = require('phaser');
 
 var StarBG = function(scene){
 
-    Phaser.TileSprite.call(this, scene, 0, 0, scene.game.width, scene.game.height, 'bgtest', 0);
+    var bgImg = scene._genWorld ? 'bgstars_' + scene._genWorld.starbg.backdrop : 'bgtest';
+
+    Phaser.TileSprite.call(this, scene, 0, 0, scene.game.width, scene.game.height, bgImg, 0);
     this.fixedToCamera = true;
     this.alpha = 1;
 
     this.parallax = 0.1;
 
-    //this.tint = 0xff99cc;
+    //if (scene._genWorld) this.tint = scene._genWorld.mainColor;
 
     this.scene = scene;
 
