@@ -12,6 +12,8 @@ var Player = function(scene){
     //this.scale.x = this.scale.y = this.baseScale = 0.6;
     this.anchor.setTo(0.5, 0.5);
 
+    this._isDead = false;
+
     this.maxSpeed = 5;
     this.acceleration  = 20;
     this.damping = 1.05;
@@ -21,6 +23,8 @@ var Player = function(scene){
 
     this.fireRate = 200;
     this._lastFireTime = this.game.time.now;
+
+    this.PARTICLE_LIFE = 1000;
 
     _setupPlayerBullets.call(this);
 
@@ -46,6 +50,9 @@ Player.prototype.setPosition = function(x, y){
 };
 
 Player.prototype.update = function(){
+
+    if(this._isDead) return false;
+
     this.handleInput();
     this.updateSpeed();
     this.lookAtPointer();
@@ -107,6 +114,13 @@ Player.prototype.fire = function() {
     }
 };
 
+Player.prototype.die = function() {
+    // play death anim
+    explode.call(this);
+    this._isDead = true;
+    this.kill();
+};
+
 function _setupPlayerBullets() {
     this.bullets = this.game.add.group();
     this.bullets.enableBody = true;
@@ -117,6 +131,26 @@ function _setupPlayerBullets() {
     this.bullets.setAll('lifespan', this.bulletLifespan);
     this.bullets.setAll('outOfBoundsKill', true);
     this.bullets.setAll('checkWorldBounds', true);
+}
+
+function explode() {
+    var emitter = this.game.add.emitter(this.x, this.y, 10);
+    emitter.makeParticles('pixel');
+    emitter.setAlpha(1, 0, this.PARTICLE_LIFE, Phaser.Easing.Linear.In);
+    emitter.minParticleScale = 10;
+    emitter.maxParticleScale = 40;
+    emitter.minRotation = 0;
+    emitter.maxRotation = 0;
+    emitter.setYSpeed(-200, 200);
+    emitter.setXSpeed(-200, 200);
+    emitter.gravity = 0;
+    emitter.forEach(function(particle) {
+        particle.tint = 0x2299ff;
+    });
+    emitter.start(true, this.PARTICLE_LIFE, null, 10 + Math.random() * 5);
+    setTimeout(function() {
+        emitter.destroy();
+    }, this.PARTICLE_LIFE);
 }
 
 
