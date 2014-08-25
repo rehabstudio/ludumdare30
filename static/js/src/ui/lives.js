@@ -4,15 +4,11 @@ var Lives = function(scene) {
 
     this.value = 0;
 
-    var style = {
-        font: "24px VT323",
-        fill: "#03f",
-        stroke: "#000",
-        strokeThickness: 1,
-        align: "left"
-    };
-    this.text = scene.add.text(10, 30, this.value.toString(), style);
-    this.text.fixedToCamera = true;
+    this.scene = scene;
+    this.icons = this.scene.game.add.group();
+
+    this.x = 10;
+    this.y = this.scene.game.height - 20;
 
 };
 
@@ -22,8 +18,14 @@ Lives.prototype.updateFromPlayer = function(player) {
 }
 
 Lives.prototype.update = function() {
-    this.text.setText(this.value.toString());
-
+    this.icons.destroy();
+    this.icons = this.scene.game.add.group();
+    for(var i = 0; i < this.value; i++) {
+        var sp = this.scene.game.add.sprite(this.x + (20 * i), this.y, 'lifeIcon');
+        sp.anchor.setTo(0,1);
+        sp.fixedToCamera = true;
+        this.icons.add(sp);
+    }
 };
 
 module.exports = Lives;
