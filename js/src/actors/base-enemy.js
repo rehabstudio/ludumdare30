@@ -27,6 +27,8 @@ var BaseEnemy = function(scene, options){
 
     this.scene = scene;
 
+    _setupEnemyBullets.call(this);
+
     this.setup();
 
 };
@@ -42,7 +44,7 @@ BaseEnemy.prototype.setPosition = function(x, y){
 };
 
 BaseEnemy.prototype.update = function(){
-    //this.updateSpeed();
+    this.decide();
 };
 
 BaseEnemy.prototype.onRender = function(){
@@ -74,7 +76,7 @@ BaseEnemy.prototype.fire = function() {
         {
             bullet.reset(this.x, this.y);
             bullet.rotation = this.rotation;
-            this.game.physics.arcade.velocityFromRotation(bullet.rotation - 1.57079633, this.bulletSpeed, bullet.body.velocity);
+            this.game.physics.arcade.velocityFromRotation(bullet.rotation, this.bulletSpeed, bullet.body.velocity);
             this._lastFireTime = this.game.time.now + this.fireRate;
         }
     }
@@ -90,12 +92,18 @@ BaseEnemy.prototype.die = function() {
 
 function _setupEnemyBullets() {
     this.bullets = this.game.add.group();
+
+    console.log(this.bullets, this.game);
+
     this.bullets.enableBody = true;
     this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
     this.bullets.createMultiple(20, 'bullet', 0, false);
     this.bullets.setAll('anchor.x', 0.5);
     this.bullets.setAll('anchor.y', 0.5);
     this.bullets.setAll('lifespan', this.bulletLifespan);
+    this.bullets.forEach(function(bullet) {
+        bullet.tint = 0xff0000;
+    });
     this.bullets.setAll('outOfBoundsKill', true);
     this.bullets.setAll('checkWorldBounds', true);
 }

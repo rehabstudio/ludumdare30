@@ -59,6 +59,7 @@ GameScene.prototype.update = function(){
 
     this.physics.arcade.collide(this.player.bullets, this.enemies, this.playerBulletHitsEnemy, null, this);
     this.physics.arcade.collide(this.player, this.enemies, this.enemyHitsPlayer, null, this);
+    //this.physics.arcade.collide(this.player, this.enemies, this.enemyHitsPlayer, null, this);
 
     this.player.update();
     this.starbg.update();
@@ -81,6 +82,10 @@ GameScene.prototype.playerBulletHitsEnemy = function(bullet, enemy) {
 };
 
 GameScene.prototype.enemyHitsPlayer = function(player, enemy) {
+    player.die();
+};
+
+GameScene.prototype.enemyBulletHitsPlayer = function(player, bullet) {
     player.die();
 };
 
