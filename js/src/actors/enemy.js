@@ -6,8 +6,10 @@ var Enemy = function(scene){
     BaseEnemy.call(this, scene, {
         sprite: 'enemy',
         bulletSpeed: 200,
-        fireRate: 3000
+        fireRate: 6000
     });
+
+    this.fireDistance = 500;
 
 };
 
@@ -27,6 +29,9 @@ Enemy.prototype.decide = function() {
 function fireAtPlayer() {
 
     var targ = this.scene.player;
+
+    if(this.game.physics.arcade.distanceBetween(this, targ) > this.fireDistance) return false;
+
     this.fire();
 
 }

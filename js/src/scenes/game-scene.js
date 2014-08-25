@@ -46,7 +46,7 @@ GameScene.prototype.init = function(config){
 
     _addStarfield.call(this);
     _addPlayer.call(this);
-
+    _setupEnemyBullets.call(this);
     _setupEnemies.call(this);
 
     _configCamera.call(this);
@@ -59,7 +59,7 @@ GameScene.prototype.update = function(){
 
     this.physics.arcade.collide(this.player.bullets, this.enemies, this.playerBulletHitsEnemy, null, this);
     this.physics.arcade.collide(this.player, this.enemies, this.enemyHitsPlayer, null, this);
-    //this.physics.arcade.collide(this.player, this.enemies, this.enemyHitsPlayer, null, this);
+    this.physics.arcade.collide(this.player, this.enemyBullets, this.enemyHitsPlayer, null, this);
 
     this.player.update();
     this.starbg.update();
@@ -122,6 +122,24 @@ function _setupEnemies() {
         var nme = new Actors.Enemy(this);
         this.enemies.add(nme);
     }
+}
+
+function _setupEnemyBullets() {
+    this.enemyBullets = this.game.add.group();
+
+    console.log(this.enemyBullets, this.game);
+
+    this.enemyBullets.enableBody = true;
+    this.enemyBullets.physicsBodyType = Phaser.Physics.ARCADE;
+    this.enemyBullets.createMultiple(40, 'bullet', 0, false);
+    this.enemyBullets.setAll('anchor.x', 0.5);
+    this.enemyBullets.setAll('anchor.y', 0.5);
+    this.enemyBullets.setAll('lifespan', 2000);
+    this.enemyBullets.forEach(function(bullet) {
+        bullet.tint = 0xff0000;
+    });
+    this.enemyBullets.setAll('outOfBoundsKill', true);
+    this.enemyBullets.setAll('checkWorldBounds', true);
 }
 
 module.exports = GameScene;

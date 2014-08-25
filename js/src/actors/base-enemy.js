@@ -27,8 +27,6 @@ var BaseEnemy = function(scene, options){
 
     this.scene = scene;
 
-    _setupEnemyBullets.call(this);
-
     this.setup();
 
 };
@@ -70,7 +68,7 @@ BaseEnemy.prototype.fire = function() {
     if (this.game.time.now > this._lastFireTime)
     {
         console.log('fire');
-        var bullet = this.bullets.getFirstExists(false);
+        var bullet = this.scene.enemyBullets.getFirstExists(false);
 
         if (bullet)
         {
@@ -90,23 +88,6 @@ BaseEnemy.prototype.die = function() {
     this.scene.addToScore(this.score);
 };
 
-function _setupEnemyBullets() {
-    this.bullets = this.game.add.group();
-
-    console.log(this.bullets, this.game);
-
-    this.bullets.enableBody = true;
-    this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
-    this.bullets.createMultiple(20, 'bullet', 0, false);
-    this.bullets.setAll('anchor.x', 0.5);
-    this.bullets.setAll('anchor.y', 0.5);
-    this.bullets.setAll('lifespan', this.bulletLifespan);
-    this.bullets.forEach(function(bullet) {
-        bullet.tint = 0xff0000;
-    });
-    this.bullets.setAll('outOfBoundsKill', true);
-    this.bullets.setAll('checkWorldBounds', true);
-}
 
 function explode() {
     var emitter = this.game.add.emitter(this.x, this.y, 10);

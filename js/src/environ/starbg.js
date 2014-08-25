@@ -8,6 +8,8 @@ var StarBG = function(scene){
 
     this.parallax = 0.1;
 
+    //this.tint = 0xff99cc;
+
     this.scene = scene;
 
     console.log(this);
