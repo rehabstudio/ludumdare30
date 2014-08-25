@@ -74,6 +74,9 @@ GameScene.prototype.init = function(config){
 
     _showEntryName.call(this, this._genWorld.name, this._genWorld.mainColor);
 
+    var warpSound = this.add.audio('longwarp');
+    warpSound.play();
+
 };
 
 GameScene.prototype.update = function(){
@@ -128,6 +131,8 @@ GameScene.prototype.usePortal = function(player, portal) {
     player._isWarping = true;
     this.enemyBullets.forEach(function(b) { b.kill(); });
     player.kill();
+    this.player.sounds.warp.play();
+    this.player.fireSpawnParticles();
     this.game.time.events.add(2000, function() {
         this.game.worldManager.storeData(this);
         this.game.state.start('game-scene', true, false);

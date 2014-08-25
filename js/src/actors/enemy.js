@@ -17,7 +17,7 @@ Enemy.prototype = Object.create(BaseEnemy.prototype);
 Enemy.prototype.constructor = Enemy;
 
 Enemy.prototype.setup = function() {
-    console.log('Enemy setup');
+
 }
 
 Enemy.prototype.decide = function() {

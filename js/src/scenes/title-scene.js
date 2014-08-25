@@ -20,6 +20,8 @@ TitleScene.prototype.create = function(){
     _displayRect.call(this);
     _displayLogo.call(this);
 
+    this.bigBang = this.game.add.audio('bigbang');
+
     this.game.time.events.add(3000, function() {
         _displayStartText.call(this);
     }, this);
@@ -76,6 +78,7 @@ function _displayLogo() {
     bounce.to({ x:1, y: 1 }, 600, Phaser.Easing.Linear.None);
     bounce.onComplete.add(function() {
         explode.call(this);
+        this.bigBang.play();
         this.rect.tint = 0xffffff;
         this.add.tween(this.rect).to({ alpha:0 }, 3000, Phaser.Easing.Linear.None).start();
     }, this);

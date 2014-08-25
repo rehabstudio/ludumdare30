@@ -48,6 +48,12 @@ var Player = function(scene){
 
     this.scene = scene;
 
+    this.sounds = {
+        fire: this.scene.add.audio('playerfire'),
+        warp: this.scene.add.audio('warp'),
+        death: this.scene.add.audio('playerdeath')
+    };
+
     this.scene.time.events.add(1000, function() {
         this.spawn(true);
     }, this);
@@ -134,6 +140,7 @@ Player.prototype.fire = function() {
 
         if (bullet)
         {
+            this.sounds.fire.play();
             bullet.reset(this.x, this.y);
             bullet.rotation = this.rotation;
             this.game.physics.arcade.velocityFromRotation(bullet.rotation - 1.57079633, this.bulletSpeed, bullet.body.velocity);
@@ -145,8 +152,13 @@ Player.prototype.fire = function() {
 Player.prototype.die = function() {
     // play death anim
     explode.call(this);
+    this.sounds.death.play();
     this._isDead = true;
     this.kill();
+};
+
+Player.prototype.fireSpawnParticles = function() {
+    spawnIn.call(this);
 };
 
 Player.prototype.spawn = function(noLifeLoss) {
@@ -156,6 +168,7 @@ Player.prototype.spawn = function(noLifeLoss) {
     if(! noLifeLoss) this.lives--;
     this.revive();
     this.active = true;
+    this.sounds.warp.play();
     this.body.velocity.x = this.body.velocity.y = 0;
 
     this.game.time.events.add(this.spawnInvulTime, function() {

@@ -27,6 +27,11 @@ var BaseEnemy = function(scene, options){
 
     this.scene = scene;
 
+    this.sounds = {
+        fire: this.scene.add.audio('enemyfire', 0.5),
+        death: this.scene.add.audio('enemydeath')
+    };
+
     this.setup();
 
 };
@@ -67,11 +72,12 @@ BaseEnemy.prototype.fire = function() {
 
     if (this.game.time.now > this._lastFireTime)
     {
-        console.log('fire');
+
         var bullet = this.scene.enemyBullets.getFirstExists(false);
 
         if (bullet)
         {
+            this.sounds.fire.play();
             bullet.reset(this.x, this.y);
             bullet.rotation = this.rotation - 1.57079633;
             this.game.physics.arcade.velocityFromRotation(this.rotation, this.bulletSpeed, bullet.body.velocity);
@@ -83,6 +89,7 @@ BaseEnemy.prototype.fire = function() {
 BaseEnemy.prototype.die = function() {
     // play death anim
     explode.call(this);
+    this.sounds.death.play();
     this.destroy();
 
     this.scene.addToScore(this.score);

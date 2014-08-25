@@ -20,6 +20,20 @@ var assets = {
     ],
     fonts: [
 
+    ],
+    sounds: [
+
+        ['bigbang', 'assets/sfx/lrg_explosion.wav'],
+
+        ['playerfire', 'assets/sfx/enemy_fire02.wav'],
+        ['playerdeath', 'assets/sfx/hero_death02.wav'],
+
+        ['enemyfire', 'assets/sfx/enemy_fire01.wav'],
+        ['enemydeath', 'assets/sfx/enemy_death02.wav'],
+
+        ['warp', 'assets/sfx/warp.wav'],
+        ['longwarp', 'assets/sfx/lrg_lazer_beam.wav']
+
     ]
 };
 
@@ -71,9 +85,20 @@ function preloadAssets(game){
     for (idx =0; idx < assets.fonts.length; idx++){
         console.log("\t" + assets.fonts[idx][0] + ": " +assets.fonts[idx][1]);
         game.load.bitmapFont(
-            assets.fonts[0],
-            assets.fonts[1],
-            assets.fonts[2]
+            assets.fonts[idx][0],
+            assets.fonts[idx][1],
+            assets.fonts[idx][2]
+        );
+    }
+
+    //load all fonts
+    console.log('Preloading sounds:');
+    for (idx =0; idx < assets.sounds.length; idx++){
+        console.log("\t" + assets.sounds[idx][0] + ": " +assets.sounds[idx][1]);
+        game.load.audio(
+            assets.sounds[idx][0],
+            assets.sounds[idx][1],
+            true
         );
     }
 
