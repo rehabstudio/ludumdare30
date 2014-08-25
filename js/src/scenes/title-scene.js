@@ -105,7 +105,7 @@ function _displayCopyText() {
         strokeThickness: 1,
         align: "center"
     };
-    var text = this.add.text(this.game.width * 0.5, this.game.height - 60, STRINGS.copyText, style);
+    var text = this.add.text(this.game.width * 0.5, this.game.height - 60, STRINGS.copyText.toUpperCase(), style);
     text.anchor.setTo(0.5);
 }
 
