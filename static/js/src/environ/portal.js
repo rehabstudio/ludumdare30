@@ -12,8 +12,8 @@ var Portal = function(scene) {
     this.scale.setTo(2,2);
     this.alpha = 0.4;
 
-    this.x = 0; //scene.game.world.randomX;
-    this.y = 0; //randomY;
+    this.x = Phaser.Math.clamp(scene.game.world.randomX, -800, scene.game.world.width - 200);
+    this.y = Phaser.Math.clamp(scene.game.world.randomY, -800, scene.game.world.height - 200); //randomY;
 
     this.rotateSpeed = 0.01;
 
@@ -29,7 +29,7 @@ Portal.prototype.createEmitter = function() {
     console.log('Portal created');
     this.emitter = this.scene.add.emitter(this.x, this.y, 5);
 
-    this.open();
+    this.close();
 }
 
 Portal.prototype.update = function() {

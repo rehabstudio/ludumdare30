@@ -11,6 +11,7 @@ var Actors = {
 var UI = {
     Score: require('../ui/score'),
     WorldName: require('../ui/worldname'),
+    PortalMeter: require('../ui/portalmeter'),
     Lives: require('../ui/lives'),
     Cursor: require('../ui/cursor')
 };
@@ -46,6 +47,9 @@ GameScene.prototype.init = function(config){
     this.config = config;
     this.sprites = [];
 
+    this.killCount = 0;
+    this._killsToOpenPortal = 40;
+
     this._lastEnemyRespawn = 0;
 
     this.game.world.setBounds(-1000, -1000, 2000, 2000);
@@ -67,6 +71,9 @@ GameScene.prototype.init = function(config){
     this.score = new UI.Score(this);
     this.lives = new UI.Lives(this);
     this.nameDisplay = new UI.WorldName(this);
+    this.portalMeter = new UI.PortalMeter(this);
+
+    this.portalMeter._maxValue = this._killsToOpenPortal;
 
     this.game.worldManager.recoverData(this);
 
@@ -111,6 +118,15 @@ GameScene.prototype.render = function(){
 GameScene.prototype.playerBulletHitsEnemy = function(bullet, enemy) {
     bullet.kill();
     enemy.die();
+
+    this.killCount++;
+
+    this.portalMeter.setValue(this.killCount);
+
+    var portal = this.portals.getFirstExists();
+    if((this.killCount >= this._killsToOpenPortal) && !portal.isOpen) {
+        portal.open();
+    }
 };
 
 GameScene.prototype.enemyHitsPlayer = function(player, enemy) {
@@ -123,7 +139,7 @@ GameScene.prototype.enemyBulletHitsPlayer = function(player, bullet) {
 };
 
 GameScene.prototype.playerOverPortal = function(player, portal) {
-    if(!portal.isOpen) return false();
+    if(!portal.isOpen) return false;
 
     if(player.actionButton.isDown && !player._isWarping) {
         this.usePortal(player, portal);
@@ -179,12 +195,12 @@ GameScene.prototype.gameOver = function() {
 GameScene.prototype.updateEnemies = function() {
 
     if(this.time.now > this._lastEnemyRespawn) {
-        console.log('updateEnemies', this.enemies.countLiving());
+
         if(this.enemies.countLiving() < this._maxEnemies) {
-            console.log('enemies less than half');
+
             var nme = this.enemies.getFirstDead();
             if(nme) {
-                console.log('reset enemy');
+
                 var x = this.game.world.randomX;
                 var y = this.game.world.randomY;
 
