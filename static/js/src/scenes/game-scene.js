@@ -154,6 +154,7 @@ GameScene.prototype.usePortal = function(player, portal) {
     player.active = false;
     this.player.sounds.warp.play();
     this.player.fireSpawnParticles();
+    this.addToScore(5000);
     this.game.time.events.add(2000, function() {
         this.game.worldManager.storeData(this);
         this.game.state.start('game-scene', true, false);
@@ -183,6 +184,12 @@ GameScene.prototype.addToScore = function(amt) {
 GameScene.prototype.gameOver = function() {
 
     this.game.worldManager.clearData();
+
+    if(window.localStorage) {
+        if(!(window.localStorage['hiscore']) || (window.localStorage['hiscore'] < this.score.value)) {
+            window.localStorage['hiscore'] = this.score.value;
+        }
+    }
 
     this.gameover = this.add.sprite(this.game.width * 0.5, this.game.height * 0.5, 'gameOverText');
     this.gameover.fixedToCamera = true;

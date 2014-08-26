@@ -26,6 +26,7 @@ TitleScene.prototype.create = function(){
         _displayStartText.call(this);
     }, this);
     _displayCopyText.call(this);
+    _displayHiScore.call(this);
 };
 
 TitleScene.prototype.init = function(config){
@@ -105,6 +106,17 @@ function _displayCopyText() {
     var style = config.font.baseStyle;
 
     var text = this.add.text(this.game.width * 0.5, this.game.height - 60, STRINGS.copyText.toUpperCase(), style);
+    text.anchor.setTo(0.5);
+}
+
+function _displayHiScore() {
+
+    var style = Object.create(config.font.baseStyle);
+    style.fill = '#3f8';
+
+    var hiscore = (window.localStorage && window.localStorage['hiscore']) ? window.localStorage['hiscore'] : '0'
+
+    var text = this.add.text(this.game.width * 0.5, 10, 'HISCORE: ' + hiscore, style);
     text.anchor.setTo(0.5);
 }
 
