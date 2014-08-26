@@ -40,10 +40,13 @@ GameScene.prototype.init = function(config){
 
     window.startTime = this.game.time.now;
 
-    this._numEnemies = 20;
+    this._numEnemies = 10;
+    this._maxEnemies = 30;
 
     this.config = config;
     this.sprites = [];
+
+    this._lastEnemyRespawn = 0;
 
     this.game.world.setBounds(-1000, -1000, 2000, 2000);
 
@@ -91,6 +94,7 @@ GameScene.prototype.update = function(){
     this.player.update();
     this.starbg.update();
     this.cursor.update();
+    this.updateEnemies();
 
 }
 
@@ -172,6 +176,32 @@ GameScene.prototype.gameOver = function() {
     }, this);
 }
 
+GameScene.prototype.updateEnemies = function() {
+
+    if(this.time.now > this._lastEnemyRespawn) {
+        console.log('updateEnemies', this.enemies.countLiving());
+        if(this.enemies.countLiving() < this._maxEnemies) {
+            console.log('enemies less than half');
+            var nme = this.enemies.getFirstDead();
+            if(nme) {
+                console.log('reset enemy');
+                var x = this.game.world.randomX;
+                var y = this.game.world.randomY;
+
+                enemySpawnWarning.call(this, x, y);
+
+                this.time.events.add(800, function() {
+                    nme.reset(x, y);
+                    nme.revive();
+                    nme.alive = true;
+                }, this);
+            }
+        }
+        this._lastEnemyRespawn = this.time.now + this._enemyRespawnTimer;
+    }
+
+};
+
 function _addPlayer() {
     this.player = new Actors.Player(this);
     this.player.setPosition(this.game.width/2, this.game.height/2);
@@ -214,6 +244,8 @@ function _setupEnemies() {
         var nme = new Actors.Enemy(this);
         this.enemies.add(nme);
     }
+
+    this._enemyRespawnTimer = 1000;
 }
 
 function _showEntryName(name, color) {
@@ -248,10 +280,10 @@ function _setupEnemyBullets() {
 
     this.enemyBullets.enableBody = true;
     this.enemyBullets.physicsBodyType = Phaser.Physics.ARCADE;
-    this.enemyBullets.createMultiple(40, 'bullet', 0, false);
+    this.enemyBullets.createMultiple(50, 'bullet', 0, false);
     this.enemyBullets.setAll('anchor.x', 0.5);
     this.enemyBullets.setAll('anchor.y', 0.5);
-    this.enemyBullets.setAll('lifespan', 2000);
+    this.enemyBullets.setAll('lifespan', 4000);
     this.enemyBullets.setAll('scale.x', 2);
     this.enemyBullets.setAll('scale.y', 2);
     /*this.enemyBullets.forEach(function(bullet) {
@@ -262,6 +294,26 @@ function _setupEnemyBullets() {
 
     this.time.events.loop(80, function() {
         this.enemyBullets.alpha = (this.enemyBullets.alpha == 1) ? 0.5 : 1;
+    }, this);
+}
+
+function enemySpawnWarning(x, y) {
+
+    var emitter = this.game.add.emitter(x, y, 40);
+    emitter.makeParticles('pixel');
+    emitter.minParticleScale = 3;
+    emitter.maxParticleScale = 6;
+    emitter.minRotation = 0;
+    emitter.maxRotation = 0;
+    emitter.setYSpeed(-300, 300);
+    emitter.setXSpeed(-300, 300);
+    emitter.gravity = 0;
+    emitter.forEach(function(particle) {
+        particle.tint = 0xff0000;
+    });
+    emitter.start(true, 800, null, 10 + Math.random() * 5);
+    this.game.time.events.add(800, function() {
+        emitter.destroy();
     }, this);
 }
 

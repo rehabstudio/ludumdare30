@@ -20,7 +20,7 @@ TitleScene.prototype.create = function(){
     _displayRect.call(this);
     _displayLogo.call(this);
 
-    this.bigBang = this.game.add.audio('bigbang');
+    this.bigBang = this.game.add.audio('bigbang', 0.2);
 
     this.game.time.events.add(3000, function() {
         _displayStartText.call(this);

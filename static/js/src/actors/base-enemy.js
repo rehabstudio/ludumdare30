@@ -8,12 +8,15 @@ var BaseEnemy = function(scene, options){
     this.game.physics.enable(this, Phaser.Physics.ARCADE);
 
     // config
-    this.speed = options.speed || Math.random()*10 + 15;
+    this.accel = this.game.rnd.integerInRange(50,200);
+    this.maxSpeed = this.game.rnd.integerInRange(50,200);
     this.score = options.score || 250;
 
     this.bulletSpeed = options.bulletSpeed || 1000;
     this.bulletLifespan = 2000;
-    this.fireRate = 1000;
+    this.fireRate = 1000 * this.game.rnd.integerInRange(1,3);
+
+    this.aggression = Phaser.Math.clamp(Math.random(), 0.05, 0.2);
 
     // others
     this.body.immovable = true;
@@ -47,7 +50,12 @@ BaseEnemy.prototype.setPosition = function(x, y){
 };
 
 BaseEnemy.prototype.update = function(){
+    if(!this.alive) return false;
     this.decide();
+};
+
+BaseEnemy.prototype.decide = function() {
+
 };
 
 BaseEnemy.prototype.onRender = function(){
@@ -90,7 +98,8 @@ BaseEnemy.prototype.die = function() {
     // play death anim
     explode.call(this);
     this.sounds.death.play();
-    this.destroy();
+    this.kill();
+    this.alive = false;
 
     this.scene.addToScore(this.score);
 };

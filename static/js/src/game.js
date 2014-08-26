@@ -30,6 +30,8 @@ Game.prototype.onPreload = function(){
 
 Game.prototype.onCreate = function(){
 
+    Phaser.Sound.volume = 0.2;
+
     this.worldManager = new WorldManager(this);
 
     this.state.add('title-scene', new Scenes.title(), false);
