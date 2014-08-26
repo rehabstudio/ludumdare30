@@ -1,6 +1,7 @@
 var _ = require('lodash');
 var Phaser = require('phaser');
 var Assets = require('./assets');
+var config = require('./config');
 
 var Scenes = {
     game: require('./scenes/game-scene'),
@@ -25,8 +26,23 @@ var Game = function(){
 Game.prototype = Object.create(Phaser.Game.prototype);
 
 Game.prototype.onPreload = function(){
-    Assets.preload(this);
+    this.showLoader();
+    var self = this;
+    Assets.preload(this, function(progress, cacheKey, success, totalLoaded, totalFiles) {
+        self.loaderText.text = 'LOADING... ' + progress.toString() + '%';
+    });
 };
+
+Game.prototype.showLoader = function() {
+
+    var style = config.font.baseStyle;
+
+    var text = this.add.text(this.width * 0.5, this.height * 0.5, 'LOADING...', style);
+    text.anchor.setTo(0.5);
+
+    this.loaderText = text;
+
+}
 
 Game.prototype.onCreate = function(){
 
