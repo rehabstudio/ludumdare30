@@ -185,16 +185,15 @@ GameScene.prototype.gameOver = function() {
 
     this.game.worldManager.clearData();
 
-    if(window.localStorage) {
-        if(!(window.localStorage['hiscore']) || (window.localStorage['hiscore'] < this.score.value)) {
-            window.localStorage['hiscore'] = this.score.value;
-        }
-    }
-
     this.gameover = this.add.sprite(this.game.width * 0.5, this.game.height * 0.5, 'gameOverText');
     this.gameover.fixedToCamera = true;
     this.gameover.anchor.setTo(0.5,0.5);
     this.time.events.add(5000, function() {
+        if(window.localStorage) {
+            if(!(window.localStorage['hiscore']) || (window.localStorage['hiscore'] < this.score.value)) {
+                window.localStorage['hiscore'] = this.score.value;
+            }
+        }
         this.game.state.start('title-scene', true, false);
     }, this);
 }
