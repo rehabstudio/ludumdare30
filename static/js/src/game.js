@@ -19,13 +19,33 @@ var Game = function(){
         {
             preload: _.bind(this.onPreload, this),
             create: _.bind(this.onCreate, this)
-        }
+        },
+        false,
+        true
     );
 };
 
 Game.prototype = Object.create(Phaser.Game.prototype);
 
 Game.prototype.onPreload = function(){
+    this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    this.scale.pageAlignHorizontally = true;
+    this.scale.pageAlignVertically = true;
+    this.scale.setScreenSize(true);
+
+    /*var ow = 800; //parseInt(this.canvas.style.width,10);
+    var oh = 800; //parseInt(this.canvas.style.height,10);
+    var r = Math.max(window.innerWidth/ow,window.innerHeight/oh);
+    var nw = ow*r;
+    var nh = oh*r;
+    this.canvas.style.width = nw+"px";
+    this.canvas.style.height= nh+"px";
+    this.canvas.style.marginLeft = (window.innerWidth/2 - nw/2)+"px";
+    this.canvas.style.marginTop = (window.innerHeight/2 - nh/2)+"px";
+    document.getElementById("stage").style.width = window.innerWidth+"px";
+    document.getElementById("stage").style.height = window.innerHeight-1+"px";//The css for body includes 1px top margin, I believe this is the cause for this -1
+    document.getElementById("stage").style.overflow = "hidden";*/
+
     this.showLoader();
     var self = this;
     Assets.preload(this, function(progress, cacheKey, success, totalLoaded, totalFiles) {
